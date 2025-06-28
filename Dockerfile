@@ -1,23 +1,22 @@
-FROM maven:3.8.3-openjdk-17 as builder
+# Étape 1 : Build avec Maven
+FROM maven:3.9.6-eclipse-temurin-17 AS builder
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY . /usr/src/app
+COPY pom.xml .
+RUN mvn dependency:go-offline
 
-ARG DB_URL
-ARG DB_USERNAME
-ARG DB_PASSWORD
-ARG PORT
+COPY src ./src
 
-RUN mvn package
+RUN mvn clean package -DskipTests
 
-FROM openjdk:17-jdk-alpine
+# Étape 2 : Exécution avec image Java 17 standard (pas alpine)
+FROM eclipse-temurin:17-jdk
 
-WORKDIR /
+WORKDIR /app
 
-COPY --from=builder /usr/src/app/target/*.jar /app.jar
+COPY --from=builder /app/target/*.jar app.jar
 
 EXPOSE 8080
 
-ENTRYPOINT ["java"]
-CMD ["-jar", "/app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]

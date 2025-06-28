@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Service
 public class FlowerRequest {
-    private final RestClient restClient = RestClient.create("https://www.epsi-projet-i1.fr");
+    private final RestClient restClient = RestClient.create("https://archiflower-catalog.arthur-heude.dev");
 
     /**
      * API Request call flower service to get flower by id

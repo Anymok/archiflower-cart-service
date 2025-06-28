@@ -9,7 +9,7 @@ import org.springframework.web.client.RestClient;
 
 @Service
 public class OrderRequest {
-    private final RestClient restClient = RestClient.create("https://www.epsi-projet-i1.fr");
+    private final RestClient restClient = RestClient.create("https://archiflower-order.arthur-heude.dev");
 
     /**
      * API Request call order service to create and return order
